@@ -26,11 +26,10 @@
 
 package net.minecraft.launchwrapper;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,7 +66,7 @@ import static java.util.Objects.requireNonNull;
 
 
 public class LaunchClassLoader extends URLClassLoader {
-    private static final Logger logger = LogManager.getLogger("LaunchWrapper");
+    private static final Logger logger = LoggerFactory.getLogger("LaunchWrapper");
 
     static {
         /* Use this, if you encounter weird issues */
@@ -166,7 +165,7 @@ public class LaunchClassLoader extends URLClassLoader {
             if (transformer instanceof IClassNameTransformer && renameTransformer == null)
                 renameTransformer = (IClassNameTransformer) transformer;
         } catch (Exception e) {
-            logger.log(Level.ERROR, "A critical problem occurred registering the transformer class {}", transformerClassName, e);
+            logger.error("A critical problem occurred registering the transformer class {}", transformerClassName, e);
         }
     }
 
@@ -216,7 +215,7 @@ public class LaunchClassLoader extends URLClassLoader {
             transformedClass = runTransformers(untransformedName, transformedName, classData);
         } catch (Exception e) {
             if(DEBUG)
-                logger.log(Level.TRACE, "Exception encountered while transformimg class {}", name, e);
+                logger.trace("Exception encountered while transformimg class {}", name, e);
         }
 
         // If transformer chain provides no class data, mark given class name invalid and throw CNFE
@@ -230,7 +229,7 @@ public class LaunchClassLoader extends URLClassLoader {
             try {
                 saveTransformedClass(transformedClass, transformedName);
             } catch(IOException e){
-                logger.log(Level.WARN, "Failed to save class {}", transformedName, e);
+                logger.trace("Failed to save class {}", transformedName, e);
                 e.printStackTrace();
             }
         }
@@ -283,7 +282,7 @@ public class LaunchClassLoader extends URLClassLoader {
             return clazz;
         } catch (Exception e) {
             invalidClasses.add(name);
-            if (DEBUG) logger.log(Level.TRACE, "Exception encountered attempting classloading of {}", name, e);
+            if (DEBUG) logger.trace("Exception encountered attempting classloading of {}", name, e);
             throw new ClassNotFoundException(name, e);
         }
     }
@@ -451,7 +450,7 @@ public class LaunchClassLoader extends URLClassLoader {
             logger.debug("Saving transformed class \"{}\" to \"{}\"", transformedName, classFile.toString());
             output.write(data);
         } catch (IOException ex) {
-            logger.log(Level.WARN, "Could not save transformed class \"{}\"", transformedName, ex);
+            logger.warn("Could not save transformed class \"{}\"", transformedName, ex);
         }
     }
 

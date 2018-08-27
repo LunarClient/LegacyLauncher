@@ -12,8 +12,8 @@ version = "1.18"
 description = "Minecraft LegacyLauncher - mikroskeem's fork"
 
 val joptSimpleVersion = "5.0.4"
-val asmVersion = "5.2"
-val log4j2Version = "2.8.1"
+val asmVersion = "6.2.1"
+val slf4jVersion = "1.8.0-beta2"
 val jbAnnotationsVersion = "15.0"
 
 val gradleWrapperVersion = "4.6"
@@ -31,21 +31,22 @@ repositories {
 
 dependencies {
     compile("net.sf.jopt-simple:jopt-simple:$joptSimpleVersion")
-    compile("org.ow2.asm:asm-all:$asmVersion")
-    compile("org.apache.logging.log4j:log4j-api:$log4j2Version")
+    compile("org.ow2.asm:asm:$asmVersion")
+    compile("org.slf4j:slf4j-api:$slf4jVersion")
     compile("org.jetbrains:annotations:$jbAnnotationsVersion")
 
     testImplementation("org.spongepowered:lwts:$lwtsVersion") {
         exclude(group = "net.minecraft", module = "launchwrapper")
     }
     testImplementation("eu.mikroskeem:shuriken.instrumentation:$shurikenVersion")
-    testImplementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
+    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
 }
 
 val test by tasks.getting(Test::class) {
     systemProperty("lwts.tweaker", "eu.mikroskeem.test.launchwrapper.tweaker.TestTweaker")
     systemProperty("legacy.debugClassLoading", "true")
     systemProperty("legacy.debugClassLoadingFiner", "true")
+    systemProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace")
 
     // Set working directory
     workingDir = this.temporaryDir
