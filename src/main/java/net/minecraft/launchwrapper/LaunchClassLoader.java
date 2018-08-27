@@ -26,8 +26,8 @@
 
 package net.minecraft.launchwrapper;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,7 +158,7 @@ public class LaunchClassLoader extends URLClassLoader {
      *
      * @param transformerClassName Fully qualified transformer class name, see {@link Class#getName()}
      */
-    public void registerTransformer(@NotNull String transformerClassName) {
+    public void registerTransformer(@NonNull String transformerClassName) {
         try {
             IClassTransformer transformer = (IClassTransformer) loadClass(transformerClassName).newInstance();
             transformers.add(transformer);
@@ -303,7 +303,7 @@ public class LaunchClassLoader extends URLClassLoader {
      *
      * @return Unmodifiable list of added {@link URL}s
      */
-    @NotNull
+    @NonNull
     public List<URL> getSources() {
         return Collections.unmodifiableList(sources);
     }
@@ -313,7 +313,7 @@ public class LaunchClassLoader extends URLClassLoader {
      *
      * @return List of registered {@link IClassTransformer} instances
      */
-    @NotNull
+    @NonNull
     public List<IClassTransformer> getTransformers() {
         return Collections.unmodifiableList(transformers);
     }
@@ -326,7 +326,7 @@ public class LaunchClassLoader extends URLClassLoader {
      * @deprecated Use {@link #getClassLoaderExclusions()} instead
      */
     @Deprecated
-    public void addClassLoaderExclusion(@NotNull String toExclude) {
+    public void addClassLoaderExclusion(@NonNull String toExclude) {
         classLoaderExceptions.add(toExclude);
     }
 
@@ -350,7 +350,7 @@ public class LaunchClassLoader extends URLClassLoader {
      * @deprecated Use {@link #getTransformerExclusions()} instead.
      */
     @Deprecated
-    public void addTransformerExclusion(@NotNull String toExclude) {
+    public void addTransformerExclusion(@NonNull String toExclude) {
         transformerExceptions.add(toExclude);
     }
 
@@ -373,7 +373,7 @@ public class LaunchClassLoader extends URLClassLoader {
      * @return Class raw bytes, or null if class was not found
      */
     @Nullable
-    public byte[] getClassBytes(@NotNull String name) {
+    public byte[] getClassBytes(@NonNull String name) {
         if (negativeResourceCache.contains(name)) {
             return null;
         } else if (resourceCache.containsKey(name)) {
@@ -415,12 +415,12 @@ public class LaunchClassLoader extends URLClassLoader {
      *
      * @param entriesToClear Entries to clear
      */
-    public void clearNegativeEntries(@NotNull Set<String> entriesToClear) {
+    public void clearNegativeEntries(@NonNull Set<String> entriesToClear) {
         negativeResourceCache.removeAll(entriesToClear);
     }
 
     @Nullable
-    private byte[] readFully(@NotNull InputStream stream) {
+    private byte[] readFully(@NonNull InputStream stream) {
         try(ByteArrayOutputStream os = new ByteArrayOutputStream(stream.available())) {
             int readBytes;
             byte[] buffer = loadBuffer.get();
@@ -435,7 +435,7 @@ public class LaunchClassLoader extends URLClassLoader {
         }
     }
 
-    private void saveTransformedClass(@NotNull byte[] data, @NotNull String transformedName) throws IOException {
+    private void saveTransformedClass(/*@NonNull*/ byte[] data, @NonNull String transformedName) throws IOException {
         Path classFile = Paths.get(DUMP_PATH.toString(), transformedName.replace('.', File.separatorChar) + ".class");
 
         if(Files.notExists(classFile.getParent()))
@@ -454,17 +454,17 @@ public class LaunchClassLoader extends URLClassLoader {
         }
     }
 
-    @NotNull
-    private String untransformName(@NotNull String name) {
+    @NonNull
+    private String untransformName(@NonNull String name) {
         return renameTransformer != null ? renameTransformer.unmapClassName(name) : name;
     }
 
-    @NotNull
-    private String transformName(@NotNull String name) {
+    @NonNull
+    private String transformName(@NonNull String name) {
         return renameTransformer != null ? renameTransformer.remapClassName(name) : name;
     }
 
-    private boolean isSealed(@NotNull String path, @NotNull Manifest manifest) {
+    private boolean isSealed(@NonNull String path, @NonNull Manifest manifest) {
         Attributes attributes = manifest.getAttributes(path);
         String sealed = attributes != null ? attributes.getValue(Name.SEALED) : null;
 
@@ -474,7 +474,7 @@ public class LaunchClassLoader extends URLClassLoader {
     }
 
     @Nullable
-    private URLConnection findCodeSourceConnectionFor(@NotNull String name) {
+    private URLConnection findCodeSourceConnectionFor(@NonNull String name) {
         final URL resource = findResource(name);
         if (resource != null) {
             try {
@@ -488,7 +488,7 @@ public class LaunchClassLoader extends URLClassLoader {
     }
 
     @Nullable
-    private byte[] runTransformers(@NotNull String name, @NotNull String transformedName, @Nullable byte[] basicClass) {
+    private byte[] runTransformers(@NonNull String name, @NonNull String transformedName, /*@Nullable*/ byte[] basicClass) {
         if(DEBUG_FINER)
             logger.trace("Beginning transform of {{} ({})} Start Length: {}", name, transformedName, basicClass != null ? basicClass.length : 0);
 

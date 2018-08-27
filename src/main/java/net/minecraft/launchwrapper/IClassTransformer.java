@@ -26,9 +26,8 @@
 
 package net.minecraft.launchwrapper;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Class transformer interface
@@ -45,5 +44,5 @@ public interface IClassTransformer {
      * @return Transformed (or supplied) class data or null
      */
     @Nullable
-    byte[] transform(@NotNull String name, @NotNull String transformedName, @Nullable byte[] classData);
+    byte[] transform(@NonNull String name, @NonNull String transformedName, @Nullable byte[] classData);
 }

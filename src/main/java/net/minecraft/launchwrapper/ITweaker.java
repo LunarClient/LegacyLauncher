@@ -26,7 +26,7 @@
 
 package net.minecraft.launchwrapper;
 
-import org.jetbrains.annotations.NotNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
 import java.util.List;
@@ -41,7 +41,7 @@ public interface ITweaker {
      * @param args {@link List} of application's parameters
      */
     @SuppressWarnings("deprecation")
-    default void acceptOptions(@NotNull List<String> args) {
+    default void acceptOptions(@NonNull List<String> args) {
         acceptOptions(args, null, null, null);
     }
 
@@ -55,7 +55,7 @@ public interface ITweaker {
      * @deprecated This method is not used internally. See {@link ITweaker#acceptOptions(List)}
      */
     @Deprecated
-    default void acceptOptions(@NotNull List<String> args, File gameDir, final File assetsDir, String profile) {
+    default void acceptOptions(@NonNull List<String> args, File gameDir, final File assetsDir, String profile) {
         throw new IllegalStateException("Please implement this method.");
     }
 
@@ -64,14 +64,14 @@ public interface ITweaker {
      *
      * @param classLoader Current {@link LaunchClassLoader} instance
      */
-    void injectIntoClassLoader(@NotNull LaunchClassLoader classLoader);
+    void injectIntoClassLoader(@NonNull LaunchClassLoader classLoader);
 
     /**
      * Gets arguments which will be added to endpoint's {@code main(String[])}
      *
      * @return String array of arguments
      */
-    @NotNull
+    @NonNull
     String[] getLaunchArguments();
 
     /**
@@ -80,6 +80,6 @@ public interface ITweaker {
      *
      * @return Endpoint class name
      */
-    @NotNull
+    @NonNull
     String getLaunchTarget();
 }

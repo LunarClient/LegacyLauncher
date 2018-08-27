@@ -26,8 +26,7 @@
 
 package net.minecraft.launchwrapper;
 
-import org.jetbrains.annotations.NotNull;
-
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Class name transformer, useful for mostly obfuscated &lt;-&gt; mapped names
@@ -39,8 +38,8 @@ public interface IClassNameTransformer {
      * @param name Unmapped class name
      * @return Remapped class name; or supplied class name if mapping was not found
      */
-    @NotNull
-    String remapClassName(@NotNull String name);
+    @NonNull
+    String remapClassName(@NonNull String name);
 
     /**
      * Unmap class name from remapped name
@@ -48,6 +47,6 @@ public interface IClassNameTransformer {
      * @param name Mapped class name
      * @return Unmapped (original) class name; or supplied class name if mapping was not found
      */
-    @NotNull
-    String unmapClassName(@NotNull String name);
+    @NonNull
+    String unmapClassName(@NonNull String name);
 }

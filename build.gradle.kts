@@ -14,7 +14,7 @@ description = "Minecraft LegacyLauncher - mikroskeem's fork"
 val joptSimpleVersion = "5.0.4"
 val asmVersion = "6.2.1"
 val slf4jVersion = "1.8.0-beta2"
-val jbAnnotationsVersion = "15.0"
+val checkerQualVersion = "2.5.4"
 
 val gradleWrapperVersion = "4.6"
 
@@ -33,7 +33,7 @@ dependencies {
     compile("net.sf.jopt-simple:jopt-simple:$joptSimpleVersion")
     compile("org.ow2.asm:asm:$asmVersion")
     compile("org.slf4j:slf4j-api:$slf4jVersion")
-    compile("org.jetbrains:annotations:$jbAnnotationsVersion")
+    compile("org.checkerframework:checker-qual:$checkerQualVersion")
 
     testImplementation("org.spongepowered:lwts:$lwtsVersion") {
         exclude(group = "net.minecraft", module = "launchwrapper")

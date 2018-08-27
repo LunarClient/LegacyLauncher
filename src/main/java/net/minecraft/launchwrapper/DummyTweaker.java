@@ -26,16 +26,18 @@
 
 package net.minecraft.launchwrapper;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.util.List;
 
 /**
  * @author Mark Vainomaa
  */
 public class DummyTweaker implements ITweaker {
-    @Override public void acceptOptions(List<String> args) {}
-    @Override public void injectIntoClassLoader(LaunchClassLoader classLoader) {}
-    @Override public String getLaunchTarget() { return DummyTweaker.class.getName(); }
-    @Override public String[] getLaunchArguments() { return new String[0]; }
+    @Override public void acceptOptions(@NonNull List<String> args) {}
+    @Override public void injectIntoClassLoader(@NonNull LaunchClassLoader classLoader) {}
+    @Override @NonNull public String getLaunchTarget() { return DummyTweaker.class.getName(); }
+    @Override @NonNull public String[] getLaunchArguments() { return new String[0]; }
 
     public static void main(String... args){
         String[] text = new String[]{
