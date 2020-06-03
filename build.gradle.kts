@@ -71,11 +71,6 @@ license {
     filter.exclude("net/minecraft/launchwrapper/Launch.java")
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    classifier = "sources"
-    from(java.sourceSets["main"].allSource)
-}
-
 val javadoc by tasks.getting(Javadoc::class)
 
 val javadocJar by tasks.creating(Jar::class) {
@@ -87,68 +82,6 @@ val javadocJar by tasks.creating(Jar::class) {
 val wrapper by tasks.creating(Wrapper::class) {
     gradleVersion = gradleWrapperVersion
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-}
-
-publishing {
-    (publications) {
-        "maven"(MavenPublication::class) {
-            artifactId = "legacylauncher"
-
-            from(components["java"])
-            artifact(sourcesJar)
-            artifact(javadocJar)
-
-            pom.withXml {
-                builder {
-                    "name"("LegacyLauncher")
-                    "description"(project.description)
-                    "url"("https://github.com/OrionMinecraft/LegacyLauncher")
-
-                    "issueManagement" {
-                        "system"("GitHub Issues")
-                        "url"("https://github.com/OrionMinecraft/LegacyLauncher/issues")
-                    }
-
-                    "licenses" {
-                        "license" {
-                            "name"("MIT License")
-                            "url"("https://opensource.org/licenses/MIT")
-                        }
-                    }
-
-                    "developers" {
-                        "developer" {
-                            "id"("mikroskeem")
-                            "name"("Mark Vainomaa")
-                            "email"("mikroskeem@mikroskeem.eu")
-                        }
-                    }
-
-                    "scm" {
-                        "connection"("scm:git@github.com:OrionMinecraft/LegacyLauncher.git")
-                        "developerConnection"("scm:git@github.com:OrionMinecraft/LegacyLauncher.git")
-                        "url"("https://github.com/OrionMinecraft/LegacyLauncher")
-                    }
-                }
-            }
-        }
-    }
-
-    repositories {
-        mavenLocal()
-
-        if(rootProject.hasProperty("wutRepoUsername") && rootProject.hasProperty("wutRepoPassword")) {
-            maven {
-                credentials {
-                    username = rootProject.properties["wutRepoUsername"] as String
-                    password = rootProject.properties["wutRepoPassword"] as String
-                }
-
-                name = "mikroskeem-repo"
-                setUrl("https://repo.wut.ee/repository/mikroskeem-repo")
-            }
-        }
-    }
 }
 
 fun XmlProvider.builder(builder: GroovyBuilderScope.() -> Unit) {
