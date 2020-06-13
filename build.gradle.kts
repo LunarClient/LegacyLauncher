@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     java
-    id("net.minecrell.licenser") version "0.3"
+//    id("net.minecrell.licenser") version "0.3"
     `maven-publish`
 }
 
@@ -61,15 +61,15 @@ val test by tasks.getting(Test::class) {
     beforeTest(closureOf<Any> { logger.lifecycle("Running test: $this") })
 }
 
-license {
-    header = rootProject.file("etc/HEADER")
-    filter.include("**/*.java")
-
+//license {
+//    header = rootProject.file("etc/HEADER")
+//    filter.include("**/*.java")
+//
     // Because org.spongepowered.asm.launch.MixinBootstrap does this:
     // if(MixinBootstrap.findInStackTrace("net.minecraft.launchwrapper.Launch", "launch") > 132) {
     //     *we are not in pre-init some mixins may be skipped blah blah*
-    filter.exclude("net/minecraft/launchwrapper/Launch.java")
-}
+//    filter.exclude("net/minecraft/launchwrapper/Launch.java")
+//}
 
 val javadoc by tasks.getting(Javadoc::class)
 
