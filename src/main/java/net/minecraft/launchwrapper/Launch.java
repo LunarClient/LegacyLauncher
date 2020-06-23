@@ -150,7 +150,7 @@ public class Launch {
             mainMethod.invoke(null, (Object) argumentList.toArray(new String[argumentList.size()]));
         } catch (Exception e) {
             logger.error("Unable to launch", e);
-            System.exit(1);
+            throw new IllegalStateException("Unable to launch", e);
         }
     }
 }
