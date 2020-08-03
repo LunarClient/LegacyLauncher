@@ -30,7 +30,7 @@ public class Launch {
         new Launch().launch(args);
     }
 
-    private Launch() {
+    public Launch() {
         if (getClass().getClassLoader() instanceof URLClassLoader) {
             final URLClassLoader ucl = (URLClassLoader) getClass().getClassLoader();
             classLoader = new LaunchClassLoader(ucl.getURLs());
@@ -58,7 +58,11 @@ public class Launch {
         return urls;
     }
 
-    private void launch(String[] args) {
+    public void launch(String[] args) {
+        setup(args, true);
+    }
+
+    public void setup(String[] args, boolean launch) {
         final OptionParser parser = new OptionParser();
         parser.allowsUnrecognizedOptions();
 
@@ -140,14 +144,16 @@ public class Launch {
                 argumentList.addAll(Arrays.asList(tweaker.getLaunchArguments()));
             }
 
-            // Finally we turn to the primary tweaker, and let it tell us where to go to launch
-            assert primaryTweaker != null;
-            final String launchTarget = primaryTweaker.getLaunchTarget();
-            final Class<?> clazz = Class.forName(launchTarget, false, classLoader);
-            final Method mainMethod = clazz.getMethod("main", String[].class);
+            if (launch) {
+                // Finally we turn to the primary tweaker, and let it tell us where to go to launch
+                assert primaryTweaker != null;
+                final String launchTarget = primaryTweaker.getLaunchTarget();
+                final Class<?> clazz = Class.forName(launchTarget, false, classLoader);
+                final Method mainMethod = clazz.getMethod("main", String[].class);
 
-            logger.info("Launching wrapped Minecraft {{}}", launchTarget);
-            mainMethod.invoke(null, (Object) argumentList.toArray(new String[argumentList.size()]));
+                logger.info("Launching wrapped Minecraft {{}}", launchTarget);
+                mainMethod.invoke(null, (Object) argumentList.toArray(new String[argumentList.size()]));
+            }
         } catch (Exception e) {
             logger.error("Unable to launch", e);
             throw new IllegalStateException("Unable to launch", e);

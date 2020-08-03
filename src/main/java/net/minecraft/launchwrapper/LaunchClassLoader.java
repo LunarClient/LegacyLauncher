@@ -218,8 +218,8 @@ public class LaunchClassLoader extends URLClassLoader {
             // Run transformers (running with null class bytes is valid, because transformers may generate classes dynamically)
             transformedClass = runTransformers(untransformedName, transformedName, classData);
         } catch (Exception e) {
-            if (DEBUG)
-                logger.trace("Exception encountered while transformimg class {}", name, e);
+            logger.trace("Exception encountered while transformimg class {}", name, e);
+            throw e;
         }
 
         // If transformer chain provides no class data, mark given class name invalid and throw CNFE
@@ -495,12 +495,12 @@ public class LaunchClassLoader extends URLClassLoader {
     }
 
     @NonNull
-    private String untransformName(@NonNull String name) {
+    public String untransformName(@NonNull String name) {
         return renameTransformer != null ? renameTransformer.unmapClassName(name) : name;
     }
 
     @NonNull
-    private String transformName(@NonNull String name) {
+    public String transformName(@NonNull String name) {
         return renameTransformer != null ? renameTransformer.remapClassName(name) : name;
     }
 
@@ -528,7 +528,7 @@ public class LaunchClassLoader extends URLClassLoader {
     }
 
     @Nullable
-    private byte[] runTransformers(@NonNull String name, @NonNull String transformedName, /*@Nullable*/ byte[] basicClass) {
+    public byte[] runTransformers(@NonNull String name, @NonNull String transformedName, /*@Nullable*/ byte[] basicClass) {
         if (DEBUG_FINER)
             logger.trace("Beginning transform of {{} ({})} Start Length: {}", name, transformedName, basicClass != null ? basicClass.length : 0);
 
