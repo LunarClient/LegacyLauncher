@@ -38,7 +38,6 @@ dependencies {
     testImplementation("org.spongepowered:lwts:$lwtsVersion") {
         exclude(group = "net.minecraft", module = "launchwrapper")
     }
-    testImplementation("eu.mikroskeem:shuriken.instrumentation:$shurikenVersion")
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
 }
 
