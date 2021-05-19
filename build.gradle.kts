@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     java
+    `java-library`
 //    id("net.minecrell.licenser") version "0.3"
     `maven-publish`
 }
@@ -30,10 +31,10 @@ repositories {
 }
 
 dependencies {
-    compile("net.sf.jopt-simple:jopt-simple:$joptSimpleVersion")
-    compile("org.ow2.asm:asm:$asmVersion")
-    compile("org.slf4j:slf4j-api:$slf4jVersion")
-    compile("org.checkerframework:checker-qual:$checkerQualVersion")
+    api("net.sf.jopt-simple:jopt-simple:$joptSimpleVersion")
+    api("org.ow2.asm:asm:$asmVersion")
+    api("org.slf4j:slf4j-api:$slf4jVersion")
+    api("org.checkerframework:checker-qual:$checkerQualVersion")
 
     testImplementation("org.spongepowered:lwts:$lwtsVersion") {
         exclude(group = "net.minecraft", module = "launchwrapper")
