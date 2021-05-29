@@ -113,8 +113,8 @@ public class LaunchClassLoader extends URLClassLoader {
                 "sun.",
                 "org.slf4j.",
                 "net.minecraft.launchwrapper.",
-                "joptsimple."
-
+                "joptsimple.",
+                "com.sun."
         ));
 
         // transformer exclusions
