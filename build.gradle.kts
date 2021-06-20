@@ -26,7 +26,7 @@ repositories {
     mavenLocal()
     mavenCentral()
 
-    maven("https://repo.wut.ee/repository/mikroskeem-repo")
+    maven("https://maven.moonsworth.com/repository/lunarclient-public/")
     maven("https://repo.spongepowered.org/maven")
 }
 
