@@ -27,10 +27,10 @@ repositories {
     mavenCentral()
     
     maven {
-        url = "https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/"
+        url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
         credentials {
-            username "aws"
-            password System.env.LUNARCLIENT_CODEARTIFACT_TOKEN
+            username = "aws".toString()
+            password = System.env.LUNARCLIENT_CODEARTIFACT_TOKEN.toString()
         }
     }
 
