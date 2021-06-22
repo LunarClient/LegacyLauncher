@@ -25,6 +25,14 @@ val shurikenVersion = "0.0.1-SNAPSHOT"
 repositories {
     mavenLocal()
     mavenCentral()
+    
+    maven {
+        url = "https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/"
+        credentials {
+            username "aws"
+            password System.env.LUNARCLIENT_CODEARTIFACT_TOKEN
+        }
+    }
 
     maven("https://maven.moonsworth.com/repository/lunarclient-public/")
     maven("https://repo.spongepowered.org/maven")
