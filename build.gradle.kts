@@ -34,7 +34,6 @@ repositories {
         }
     }
 
-    maven("https://maven.moonsworth.com/repository/lunarclient-public/")
     maven("https://repo.spongepowered.org/maven")
 }
 
