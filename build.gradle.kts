@@ -30,7 +30,7 @@ repositories {
         url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
         credentials {
             username = "aws".toString()
-            password = System.getenv("LUNARCLIENT_CODEARTIFACT_TOKEN").toString()
+            password = project.property("lunarClientCodeArtifactToken").toString()
         }
     }
 
