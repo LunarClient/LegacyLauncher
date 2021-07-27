@@ -166,7 +166,7 @@ public class LaunchClassLoader extends URLClassLoader {
         try {
             IClassTransformer transformer = (IClassTransformer) loadClass(transformerClassName).newInstance();
             transformers.add(transformer);
-            if (transformer instanceof IClassNameTransformer && renameTransformer == null)
+            if (transformer instanceof IClassNameTransformer)
                 renameTransformer = (IClassNameTransformer) transformer;
         } catch (Exception e) {
             logger.error("A critical problem occurred registering the transformer class {}", transformerClassName, e);
