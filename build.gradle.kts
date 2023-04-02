@@ -6,6 +6,7 @@ plugins {
     `java-library`
 //    id("net.minecrell.licenser") version "0.3"
     `maven-publish`
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
 }
 
 group = "eu.mikroskeem"
@@ -27,11 +28,7 @@ repositories {
     mavenCentral()
     
     maven {
-        url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
-        credentials {
-            username = "aws".toString()
-            password = project.property("lunarClientCodeArtifactToken").toString()
-        }
+        url = uri("artifactregistry://us-maven.pkg.dev/moonsworth-299m4oir/maven")
     }
 
     maven("https://repo.spongepowered.org/maven")
