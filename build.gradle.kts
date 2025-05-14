@@ -28,7 +28,7 @@ repositories {
     mavenCentral()
     
     maven {
-        url = uri("artifactregistry://us-maven.pkg.dev/moonsworth-299m4oir/maven")
+        url = uri("artifactregistry://us-maven.pkg.dev/mw-lunarclient-maven-repo/virtual")
     }
 
     maven("https://repo.spongepowered.org/maven")
